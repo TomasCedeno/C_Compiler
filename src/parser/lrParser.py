@@ -413,7 +413,7 @@ class LRParser:
 
         if os.path.isfile(tableFile) and force is False:
             # Load a saved tables file
-            messages.add(CompilerMessage("Reading saved tables.", "success"))
+            #messages.add(CompilerMessage("Reading saved tables.", "success"))
 
             self.loadTables(readFile(tableFile))
         else:

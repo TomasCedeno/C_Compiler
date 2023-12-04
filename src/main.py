@@ -23,7 +23,6 @@ from parser.grammar import (
 )
 from ir.ir import IR, readJson
 from symbolTable.symbolTable import buildSymbolTable, flattenTree
-from assembler.assembler import Assembler
 from util import CompilerMessage, messages
 
 
@@ -45,9 +44,9 @@ class Compiler:
 
         # Setup default grammar if none provided
         if self.grammar is None:
-            messages.add(
-                CompilerMessage("No grammar specified, using default.", "warning")
-            )
+            # messages.add(
+            #     CompilerMessage("No grammar specified, using default.", "warning")
+            # )
             self.grammar = "grammars/main_grammar.txt"
 
         # Setup empty list for flags if none provided
@@ -70,7 +69,7 @@ class Compiler:
         if self.tokens is None:
             raise CompilerMessage("Failed to tokenize the file.")
 
-        messages.add(CompilerMessage("Tokenized the file successfully.", "success"))
+        #messages.add(CompilerMessage("Tokenized the file successfully.", "success"))
 
         # Print the tokens
         if "-s" in self.flags:
@@ -105,7 +104,7 @@ class Compiler:
         # Change [Program] to Program
         self.parseTree = self.parseTree[0]
 
-        messages.add(CompilerMessage("Successfully parsed the tokens.", "success"))
+        #messages.add(CompilerMessage("Successfully parsed the tokens.", "success"))
 
         # Flatten the parse tree
         for reduce in [
@@ -142,7 +141,7 @@ class Compiler:
             messages.add(CompilerMessage("Failed to build the symbol table."))
             return None
 
-        messages.add(CompilerMessage("Successfully built the symbol table.", "success"))
+       # messages.add(CompilerMessage("Successfully built the symbol table.", "success"))
 
         # Print the symbol table if flag is present
         if "-t" in self.flags:
@@ -180,43 +179,20 @@ class Compiler:
                 messages.add(CompilerMessage("Failed to generate an IR."))
                 return None
 
-            messages.add(CompilerMessage("Successfully generated an IR.", "success"))
+            #messages.add(CompilerMessage("Successfully generated an IR.", "success"))
 
         if "-r" in self.flags:
-            messages.add(CompilerMessage("Intermediate Representation:", "important"))
+            #messages.add(CompilerMessage("Intermediate Representation:", "important"))
+            print("---------------- ANÁLISIS LÉXICO EXITOSO ----------------------\n")
+            print("---------------- ANÁLISIS SINTÁCTICO EXIITOSO ------------------\n")
+            print("---------------- ANÁLISIS SEMÁNTICO EXITOSO --------------------\n")
+            print("---------------- GENERACIÓN DE CÓDIGO INTERMEDIO ---------------")
             self.ir.print()
 
         if "-o" in self.flags and self.output is not None:
             self.ir.write(self.output)
 
         return self.ir
-
-    def assemble(self):
-        """Convert the IR to assembly instructions."""
-
-        # Cannot convert to IR without parse tree
-        if not self.ir:
-            raise CompilerMessage("Cannot generate asm without an IR.")
-
-        assembler = Assembler(self.ir.ir)
-
-        self.asm = assembler.generate()
-
-        if self.asm is None:
-            messages.add(CompilerMessage("Failed to generate the ASM."))
-            return None
-
-        messages.add(CompilerMessage("Successfully generated ASM.", "success"))
-
-        # Print the ASM if "-a" flag
-        if "-a" in self.flags:
-            messages.add(CompilerMessage("ASM:", "important"))
-            assembler.print()
-
-        if "-n" in self.flags:
-            assembler.write(self.asmOutput)
-
-        return 0
 
 
 def printUsage():
