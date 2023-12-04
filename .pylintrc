@@ -1,0 +1,20 @@
+[MASTER]
+
+const-naming-style=camelCase
+function-naming-style=camelCase
+variable-naming-style=camelCase
+argument-naming-style=camelCase
+module-naming-style=camelCase
+method-naming-style=camelCase
+attr-naming-style=camelCase
+
+disable=invalid-name,
+				too-many-branches,
+				too-many-statements,
+				super-init-not-called,
+				too-few-public-methods,
+				too-many-return-statements,
+				too-many-nested-blocks,
+				too-many-locals,
+				too-many-instance-attributes,
+				bad-continuation

@@ -1,0 +1,13 @@
+.DS_Store
+.vscode
+__pycache__
+*.dSYM
+a.out
+/logs
+*.log
+/tables
+*.json
+/assembly
+*.s
+/gcc
+env
